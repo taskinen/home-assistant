@@ -19,3 +19,6 @@ RUN dpkg --install *.deb
 RUN apt-get install -y supervisor
 COPY supervisord.conf /etc/supervisor/conf.d/supervisord.conf
 CMD ["/usr/bin/supervisord"]
+
+# Specify health check
+HEALTHCHECK CMD curl --fail http://localhost:8123 || exit 1
