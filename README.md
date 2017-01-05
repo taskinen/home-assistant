@@ -6,34 +6,38 @@ See official documentation from there.
 
 ## New features
 
-This image has added support for Telldus Tellstick, a USB-powered
+This image has added support for Telldus Tellstick Duo, an USB-connected
 generic 433 MHz tranceiver. To use it under Docker, container must
-be run with privilege mode (to use USB-devices) and the USB-bus
-must be visible inside the container.
+be run in privileged mode (to use USB-devices) and the USB-bus needs to
+be visible inside the container.
 
 Here is an example compose file you might use:
 
 ```
 version: '2'
 services:
-  core:
+  hass:
     image: "taskinen/home-assistant"
-    container_name: "hass"
     volumes:
-      - "/var/docker-volumes/hass/config:/config"
-      - "/var/docker-volumes/hass/tellstick.conf:/etc/tellstick.conf"
+      - "./some/dir/config:/config"
+      - "./some/dir/tellstick.conf:/etc/tellstick.conf"
     devices:
       - "/dev/bus/usb:/dev/bus/usb"
     ports:
       - "8123:8123"
-    restart: always
+    restart: unless-stopped
     network_mode: "host"
     privileged: true
 ```
 
-## Configuration of Telldus
+## Configuration of Tellstick
 
-Mount tellstick.conf file and customize it. Here is an example:
+The `/etc/tellstick.conf` file inside the container configures
+the Tellstick software. The above Docker compose example mounts
+it from the host. Create it somewhere in your host and makes
+sure the path matches the Docker compose configuration.
+
+Here is an example tellstick.conf file you need to customize:
 
 ```
 user = "root"
