@@ -3,9 +3,7 @@ MAINTAINER Timo Taskinen <timo.taskinen@iki.fi>
 
 # Add Telldus repository
 RUN echo "deb-src http://download.telldus.com/debian/ stable main" >> /etc/apt/sources.list.d/telldus.list
-RUN wget http://download.telldus.se/debian/telldus-public.key
-RUN apt-key add telldus-public.key
-RUN rm telldus-public.key
+RUN curl -sSL http://download.telldus.se/debian/telldus-public.key | apt-key add -
 
 # Install dependencies. Compile and install telldusd
 RUN apt-get update
@@ -18,7 +16,7 @@ RUN dpkg --install *.deb
 # Install and configure Supervisor
 RUN apt-get install -y supervisor
 COPY supervisord.conf /etc/supervisor/conf.d/supervisord.conf
-CMD ["/usr/bin/supervisord"]
+ENTRYPOINT ["/usr/bin/supervisord","-c","/etc/supervisor/conf.d/supervisord.conf"]
 
-# Specify health check
+# Specify health check for Docker
 HEALTHCHECK CMD curl --fail http://localhost:8123 || exit 1
