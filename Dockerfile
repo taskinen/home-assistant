@@ -18,5 +18,8 @@ RUN apt-get install -y supervisor
 COPY supervisord.conf /etc/supervisor/conf.d/supervisord.conf
 ENTRYPOINT ["/usr/bin/supervisord","-c","/etc/supervisor/conf.d/supervisord.conf"]
 
+# Clean up
+RUN apt-get clean && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
+
 # Specify health check for Docker
 HEALTHCHECK CMD curl --fail http://localhost:8123 || exit 1
