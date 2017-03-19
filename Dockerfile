@@ -1,5 +1,5 @@
 FROM homeassistant/home-assistant:0.40
-MAINTAINER Timo Taskinen <timo.taskinen@iki.fi>
+LABEL maintainer "Timo Taskinen <timo.taskinen@iki.fi>"
 
 # Add Telldus repository
 RUN echo "deb-src http://download.telldus.com/debian/ stable main" >> /etc/apt/sources.list.d/telldus.list
