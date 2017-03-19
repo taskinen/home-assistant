@@ -1,4 +1,4 @@
-FROM homeassistant/home-assistant:0.40.1
+FROM homeassistant/home-assistant:0.40
 MAINTAINER Timo Taskinen <timo.taskinen@iki.fi>
 
 # Add Telldus repository
