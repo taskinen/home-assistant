@@ -5,14 +5,13 @@ LABEL maintainer "Timo Taskinen <timo.taskinen@iki.fi>"
 RUN echo "deb-src http://download.telldus.com/debian/ stable main" >> /etc/apt/sources.list.d/telldus.list
 RUN curl -sSL http://download.telldus.se/debian/telldus-public.key | apt-key add -
 
-# Install dependencies. Compile and install telldusd and ruuvitag_sensor
+# Install dependencies. Compile and install telldusd
 RUN apt-get update
-RUN apt-get install -y build-essential python3-dev bluez bluez-hcidump sudo
+RUN apt-get install -y build-essential
 RUN apt-get build-dep -y telldus-core
 RUN apt-get install -y cmake libconfuse-dev libftdi-dev help2man
 RUN apt-get --compile source telldus-core
 RUN dpkg --install *.deb
-RUN pip3 install ruuvitag_sensor
 
 # Install and configure Supervisor
 RUN apt-get install -y supervisor
