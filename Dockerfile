@@ -1,9 +1,9 @@
 FROM homeassistant/home-assistant:latest
-MAINTAINER Timo Taskinen <timo.taskinen@iki.fi>
+LABEL maintainer="Timo Taskinen <timo.taskinen@iki.fi>"
 
 # Add Telldus repository
 RUN echo "deb-src http://download.telldus.com/debian/ stable main" >> /etc/apt/sources.list.d/telldus.list
-RUN curl -sSL http://download.telldus.se/debian/telldus-public.key | apt-key add -
+RUN curl -sSL http://download.telldus.com/debian/telldus-public.key | apt-key add -
 
 # Install dependencies. Compile and install telldusd
 RUN apt-get update
